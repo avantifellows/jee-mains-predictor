@@ -149,7 +149,7 @@ with st.expander("📘 Data Upload Instructions (Click to View)"):
 | `tenth_math_final` | Numeric | Class 10 Math percentage | `85.5` |
 | `tenth_sci_final` | Numeric | Class 10 Science percentage | `89` |
 | `pcm` | Numeric | 1 if student took PCM in 11th, 0 if student took PCMB | `1` |
-| `jeeCutoff` | Numeric | JEE 2024 qualifying cutoff percentile | `90.778` |
+| `jeeCutoff` | Numeric | JEE 2024 or 2025 qualifying cutoff percentile | `90.778` |
 
 ---
 
@@ -185,8 +185,8 @@ These are used internally by the models.
 
 | StudentName | Gender | Category | Program | tenth_math_final | tenth_sci_final | pcm | jeeCutoff |
 |-------------|--------|----------|---------|------------------|-----------------|-----|-----------|
-| Riya Sharma | Female | OBC | Avanti COE  | 88 | 91 | 89 | 90.778 |
-| Aman Gupta | Male | General | ENF COE | 92 | 95 | 93 | 90.778 |
+| Riya Sharma | Female | OBC | Avanti COE  | 88 | 91 | 1 | 90.778 |
+| Aman Gupta | Male | General | ENF COE | 92 | 95 | 0 | 90.778 |
 
 ---
 """)
@@ -253,3 +253,4 @@ if uploaded_file is not None:
 else:
     st.info("👆 Upload a file to start predictions.")
     
+
