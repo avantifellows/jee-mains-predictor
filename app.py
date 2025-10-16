@@ -4,29 +4,6 @@ import subprocess
 import tempfile
 import os
 
-# --- Install required R packages silently ---
-try:
-    subprocess.run(
-        [
-            "R",
-            "-e",
-            """
-            pkgs <- c('readr','dplyr');
-            new_pkgs <- setdiff(pkgs, rownames(installed.packages()));
-            if(length(new_pkgs)) {
-              install.packages(new_pkgs, repos='https://cloud.r-project.org');
-            } else {
-              cat('All R packages already installed\\n');
-            }
-            """
-        ],
-        check=True,
-        capture_output=True,
-        text=True,
-    )
-except subprocess.CalledProcessError as e:
-    st.error("Failed to install R packages.")
-    st.code(e.stderr)
 
 def preprocess_input_data(df: pd.DataFrame) -> pd.DataFrame:
     """
@@ -276,6 +253,7 @@ if uploaded_file is not None:
 else:
     st.info("👆 Upload a file to start predictions.")
     
+
 
 
 
