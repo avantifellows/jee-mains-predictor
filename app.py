@@ -5,6 +5,14 @@ import tempfile
 import os
 
 
+subprocess.run([
+    "R", "-e",
+    "packages <- c('readr', 'dplyr');"
+    "new_pkgs <- setdiff(packages, rownames(installed.packages()));"
+    "if(length(new_pkgs)) install.packages(new_pkgs, repos='https://cloud.r-project.org')"
+])
+
+
 def preprocess_input_data(df: pd.DataFrame) -> pd.DataFrame:
     """
     Cleans and prepares user-uploaded dataset for R model predictions.
@@ -253,4 +261,5 @@ if uploaded_file is not None:
 else:
     st.info("👆 Upload a file to start predictions.")
     
+
 
