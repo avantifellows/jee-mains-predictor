@@ -1,8 +1,10 @@
 unixodbc-dev
+apt-utils
 r-base
 r-base-dev
 r-cran-dplyr
 r-cran-readr
+
 
 
 
