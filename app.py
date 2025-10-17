@@ -11,7 +11,7 @@ def install_r_packages():
     This function runs the R package installation.
     @st.cache_resource ensures it runs only ONCE per deployment.
     """
-    st.info("Starting R package installation (this runs once and may take a few minutes)...")
+    st.info("Installing some packages to run this website properly (this runs once and may take a few minutes)...")
 
     # Define the R library path (Crucial for a writable directory)
     R_USER_LIBS = os.path.expanduser("~/R/x86_64-pc-linux-gnu-library/4.3") 
@@ -25,7 +25,7 @@ def install_r_packages():
             capture_output=True, 
             text=True
         ) 
-        st.success("R packages installed successfully!")
+        st.success("Packages installed successfully!")
         return True # Return a value to indicate success
     except subprocess.CalledProcessError as e:
         st.error(f"Failed to install R packages: {e.stderr}")
@@ -288,6 +288,7 @@ if installation_successful:
     else:
         st.info("👆 Upload a file to start predictions.")
         
+
 
 
 
