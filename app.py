@@ -4,25 +4,41 @@ import subprocess
 import tempfile
 import os
 
-# Define the R library path (must match the path used in install_packages.R)
-R_USER_LIBS = os.path.expanduser("~/R/x86_64-pc-linux-gnu-library/4.3") # Or use a simpler path like "~/R_packages"
+# --- 1. Define the R Installation Function ---
+@st.cache_resource(show_spinner=False)
+def install_r_packages():
+    """
+    This function runs the R package installation.
+    @st.cache_resource ensures it runs only ONCE per deployment.
+    """
+    st.info("Starting R package installation (this runs once and may take a few minutes)...")
 
-# Set the environment variable for both installation and execution
-os.environ['R_LIBS_USER'] = R_USER_LIBS
+    # Define the R library path (Crucial for a writable directory)
+    R_USER_LIBS = os.path.expanduser("~/R/x86_64-pc-linux-gnu-library/4.3") 
+    os.environ['R_LIBS_USER'] = R_USER_LIBS
 
-# ... (rest of your app.py)
+    try:
+        # The actual installation command
+        subprocess.run(
+            ["Rscript", "install_packages.R"], 
+            check=True, 
+            capture_output=True, 
+            text=True
+        ) 
+        st.success("R packages installed successfully!")
+        return True # Return a value to indicate success
+    except subprocess.CalledProcessError as e:
+        st.error(f"Failed to install R packages: {e.stderr}")
+        st.stop() # Stop the app if setup fails
+        return False
 
-# --- R Setup: Execute the installation script once on startup ---
-try:
-    st.info("Running R package installation...")
-    # The subprocess automatically inherits os.environ
-    subprocess.run(["Rscript", "install_packages.R"], check=True, capture_output=True, text=True) 
-    st.success("R packages installed successfully!")
-except subprocess.CalledProcessError as e:
-    st.error(f"Failed to install R packages: {e.stderr}")
-    st.stop()
-# ----------------------------------------------------------------
+# --- 2. Call the Installation Function ONCE ---
+# This line will run the function once on the first app load, 
+# and then skip it on subsequent re-runs.
+installation_successful = install_r_packages()
 
+# --- 3. Rest of your Streamlit App Logic ---
+if installation_successful:
 
 def preprocess_input_data(df: pd.DataFrame) -> pd.DataFrame:
     """
@@ -272,6 +288,7 @@ if uploaded_file is not None:
 else:
     st.info("👆 Upload a file to start predictions.")
     
+
 
 
 
