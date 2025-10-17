@@ -12,3 +12,5 @@ dir.create(user_library_path, recursive = TRUE, showWarnings = FALSE)
 
 # 4. Install the package using the new, writable path
 install.packages("readr", repos = "https://cloud.r-project.org/")
+install.packages("dplyr", repos = "https://cloud.r-project.org/")
+
