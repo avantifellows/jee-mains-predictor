@@ -4,6 +4,21 @@ import subprocess
 import tempfile
 import os
 
+# --- R Setup: Execute the installation script once on startup ---
+# This subprocess call runs the R script to install packages.
+# We use Rscript, which is part of the 'r-base' package installed by packages.txt.
+try:
+    st.info("Running R package installation...")
+    subprocess.run(["Rscript", "install_packages.R"], check=True, capture_output=True, text=True)
+    st.success("R packages installed successfully!")
+except subprocess.CalledProcessError as e:
+    st.error(f"Failed to install R packages: {e.stderr}")
+    st.stop()
+# ----------------------------------------------------------------
+
+# Now you can proceed with your Streamlit app logic:
+st.title("My R-Powered Streamlit App")
+
 
 def preprocess_input_data(df: pd.DataFrame) -> pd.DataFrame:
     """
@@ -253,6 +268,7 @@ if uploaded_file is not None:
 else:
     st.info("👆 Upload a file to start predictions.")
     
+
 
 
 
