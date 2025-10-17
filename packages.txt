@@ -2,6 +2,8 @@ unixodbc-dev
 r-base
 r-base-dev
 r-cran-dplyr
+r-cran-readr
+
 
 
 
